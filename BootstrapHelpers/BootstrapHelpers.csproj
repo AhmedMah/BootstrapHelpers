@@ -64,15 +64,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Views\Detail.cshtml" />
-    <None Include="Views\Grid.cshtml" />
+    <None Include="Views\Shared\Detail.cshtml" />
+    <None Include="Views\Shared\Grid.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+   <Target Name="BeforeBuild">
+	<ItemGroup>
+      <EmbeddedResource Include="**\*.cshtml" />
+    </ItemGroup>
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
   <Target Name="AfterBuild">
   </Target>
   -->

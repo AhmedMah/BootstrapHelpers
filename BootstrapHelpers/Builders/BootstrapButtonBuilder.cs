@@ -35,9 +35,15 @@ namespace BootstrapHelpers.Builders
             return this;
         }
 
-        public BootstrapButtonBuilder ButtonSuccess()
+        public BootstrapButtonBuilder Success()
         {
             _additionalCssClasses.Add("btn-success");
+            return this;
+        }
+
+        public BootstrapButtonBuilder Danger()
+        {
+            _additionalCssClasses.Add("btn-danger");
             return this;
         }
 
