@@ -1,0 +1,14 @@
+﻿@model Builders.DetailConfig
+
+@foreach (var field in Model.Properties.Where(c => !c.HiddenForDisplay))
+{
+    <div class ="row">
+        <div class="span4"><span class="pull-right"><strong>@field.Label</strong></span></div>
+        <div class="span8">@string.Format(field.DataFormatString, GetPropertyValue(field.PropertyName))</div>
+    </div>
+}
+
+@helper GetPropertyValue(string propertyName)
+{
+    @(Model.Data.GetType().GetProperty(propertyName).GetValue(Model.Data))
+}

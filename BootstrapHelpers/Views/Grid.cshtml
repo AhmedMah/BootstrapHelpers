@@ -1,0 +1,82 @@
+﻿@model Builders.GridConfig
+
+<table id="@Model.Id" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            @foreach (var column in Model.Properties.Where(c => !c.HiddenForDisplay))
+            {
+                <th>@column.Label</th>
+            }
+            @ShowIfEditEnabled(@<th>Edit</th>)
+            @ShowIfDeleteEnabled(@<th>Delete</th>)
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in Model.Data)
+        {
+            <tr>
+                <td>
+                    @if (@Model.DetailsEnabled)
+                    {
+                        <a href="@GenerateDetailsLink(row)">@GetPropertyValue(row, Model.Properties.First(c => !c.HiddenForDisplay).PropertyName)</a>
+                    }
+                    else
+                    {
+                        @GetPropertyValue(row, Model.Properties.First(c => !c.HiddenForDisplay).PropertyName)
+                    }
+                
+                    @foreach (var column in Model.Properties.Where(c => !c.HiddenForDisplay).Skip(1))
+                    {
+                        <td>@GetPropertyValue(row, column.PropertyName)</td>
+                    }
+                    @ShowIfEditEnabled(@<td><a href="@GenerateEditLink(row)" class="icon-edit"></a></td>)
+                    @ShowIfDeleteEnabled(@<td><a href="@GenerateDeleteLink(row)" class="icon-remove"></a></td>)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function() 
+    {
+        $("@Model.Id").tablesorter();
+    } 
+    );
+</script>
+
+@helper ShowIfEditEnabled(Func<object, HelperResult> result)
+{
+    if (Model.EditingEnabled)
+    {
+        @result(null)
+    }
+}
+
+@helper ShowIfDeleteEnabled(Func<object, HelperResult> result)
+{
+    if (Model.DeletingEnabled)
+    {
+        @result(null)
+    }
+}
+
+@helper GetPropertyValue(object obj, string propertyName)
+{
+    @(obj.GetType().GetProperty(propertyName).GetValue(obj))
+}
+
+@helper GenerateDetailsLink(object obj)
+{
+    @(Model.DetailsItemUrl.Replace("0", GetPropertyValue(obj, "Id").ToString()))
+}
+
+@helper GenerateEditLink(object obj)
+{
+    @(Model.EditItemUrl.Replace("0", GetPropertyValue(obj, "Id").ToString()))
+}
+
+@helper GenerateDeleteLink(object obj)
+{
+    @(Model.DeleteItemUrl.Replace("0", GetPropertyValue(obj, "Id").ToString()))
+}
