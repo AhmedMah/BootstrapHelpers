@@ -37,14 +37,6 @@
     </tbody>
 </table>
 
-<script>
-    $(document).ready(function() 
-    {
-        $("@Model.Id").tablesorter();
-    } 
-    );
-</script>
-
 @helper ShowIfEditEnabled(Func<object, HelperResult> result)
 {
     if (Model.EditingEnabled)

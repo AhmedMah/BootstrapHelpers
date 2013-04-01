@@ -1,1 +1,10 @@
 *.ncrunchsolution
+BootstrapHelpers.Tests/bin/*
+_NCrunch_*
+*.ncrunchsolution.user
+BootstrapHelpers.Tests/obj/*
+BootstrapHelpers/bin/*
+BootstrapHelpers/obj/*
+*.nupkg
+*.nuspec
+*.suo
